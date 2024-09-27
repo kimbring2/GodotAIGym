@@ -1,0 +1,85 @@
+[gd_scene load_steps=9 format=3 uid="uid://ckuctu4bs318y"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Mob.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://cko2cevvux4lg" path="res://Player.tscn" id="3"]
+[ext_resource type="AudioStream" uid="uid://70pvd8vnrdye" path="res://art/House In a Forest Loop.ogg" id="5"]
+[ext_resource type="AudioStream" uid="uid://bifyo4ntekb0d" path="res://art/gameover.wav" id="6"]
+[ext_resource type="PackedScene" uid="uid://dcdctie11lqli" path="res://Coin.tscn" id="7"]
+[ext_resource type="FontFile" uid="uid://e854mxjaggic" path="res://fonts/Xolonium-Regular.ttf" id="7_t2dos"]
+
+[sub_resource type="Curve2D" id="1"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 679.014, 0.160667, 0, 0, 0, 0, 679, 544, 0, 0, 0, 0, 679.328, 962.215, 0, 0, 0, 0, 337.568, 962.4, 0, 0, 0, 0, 0.48542, 961.167, 0, 0, 0, 0, 0, 0)
+}
+point_count = 7
+
+[node name="Main" type="Node"]
+script = ExtResource("1")
+mob_scene = ExtResource("2")
+coin_scene = ExtResource("7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
+offset_bottom = -2.0
+color = Color(0.219608, 0.372549, 0.380392, 1)
+
+[node name="Player" parent="." instance=ExtResource("3")]
+
+[node name="MobTimer" type="Timer" parent="."]
+
+[node name="CoinTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(252.25, 254.85)
+
+[node name="MobPath" type="Path2D" parent="."]
+scale = Vector2(1.17771, 0.831203)
+curve = SubResource("1")
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
+rotation = 0.000236618
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5")
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6")
+
+[node name="EndTimer" type="Timer" parent="."]
+wait_time = 20.0
+autostart = true
+
+[node name="Coins" type="Node3D" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -5.0
+offset_right = 5.0
+offset_bottom = 23.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("7_t2dos")
+theme_override_font_sizes/font_size = 64
+text = "0"
+
+[connection signal="timeout" from="MobTimer" to="." method="_on_MobTimer_timeout"]
+[connection signal="timeout" from="CoinTimer" to="." method="_on_CoinTimer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
+[connection signal="timeout" from="EndTimer" to="." method="_on_end_timer_timeout"]
+
+[editable path="Player"]
