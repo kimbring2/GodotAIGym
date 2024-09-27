@@ -7,7 +7,8 @@ from zipfile import ZipFile
 from pathlib import Path
 
 # GODOT_PATH = os.environ["GODOT_PATH"]
-GODOT_PATH = "/home/kimbring2/godot-3.2-stable"
+GODOT_PATH = "/media/kimbring2/be356a87-def6-4be8-bad2-077951f0f3da/godot-4.3-stable"
+
 
 def download_unpack(rewrite=False):
 	# url = 'https://download.pytorch.org/libtorch/cu102/libtorch-cxx11-abi-shared-with-deps-1.7.0.zip'
@@ -25,33 +26,42 @@ def download_unpack(rewrite=False):
 		with ZipFile('libtorch.zip', 'r') as zipObj:
    			zipObj.extractall(path='GodotModule')
 	
-
-def compile_godot(godot_root, platform='x11', tools='yes', target='release_debug', bits=64):
+'''
+def compile_godot_1(godot_root, platform='linuxbsd', tools='yes', target='template_debug', bits=64):
 	current_path = os.getcwd()
 	os.chdir(godot_root)
-	os.system(f"scons -j8 platform={platform} tools={tools} target={target} bits={bits}")
+	os.system(f"scons -j8 platform={platform} tools={tools}")
+	os.chdir(current_path)
+'''
+
+def compile_godot(godot_root, platform='linuxbsd', tools='yes', target='template_debug', bits=64):
+	current_path = os.getcwd()
+	os.chdir(godot_root)
+	os.system(f"scons -j8 platform={platform} tools={tools} target={target} bits={bits} --warn=no-all")
 	os.chdir(current_path)
 
+
 def install_module(godot_root, rewrite=False):
-	module_dir = os.path.join(godot_root, 'modules/GodotSharedMemory')
+	module_dir = os.path.join(godot_root, 'modules/csharedmemory')
 	if (not os.path.exists(module_dir)):
 		copytree('GodotModule', module_dir)
 	elif rewrite:
 		rmtree(module_dir)
 		copytree('GodotModule', module_dir)
 	
+	
 def install_python_module():
 	current_path = os.getcwd()
 	os.chdir('PythonModule')
-	os.system('python3.8 setup.py install')
+	os.system('python setup.py install')
 	os.chdir(current_path)
+
 
 if __name__=='__main__':
 	assert os.path.exists(GODOT_PATH)
 	
-	download_unpack(rewrite=False)
+	#download_unpack(rewrite=True)
 	install_module(godot_root=GODOT_PATH, rewrite=True)
 	install_python_module()
-	compile_godot(godot_root=GODOT_PATH, platform='x11', tools='yes', target='release_debug', bits=64)
-	compile_godot(godot_root=GODOT_PATH, platform='x11', tools='no', target='release_debug', bits=64)
-	#compile_godot(godot_root=GODOT_PATH, platform='server', tools='no', target='release_debug', bits=64)
+	compile_godot(godot_root=GODOT_PATH, platform='linuxbsd', tools='yes', target='template_debug', bits=64)
+	compile_godot(godot_root=GODOT_PATH, platform='linuxbsd', tools='no', target='template_debug', bits=64)

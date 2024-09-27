@@ -11,12 +11,13 @@
 
 using namespace boost::interprocess;
 
-typedef allocator<int, managed_shared_memory::segment_manager>  ShmemAllocatorInt;
-typedef allocator<float, managed_shared_memory::segment_manager>  ShmemAllocatorFloat;
-typedef allocator<uint8_t, managed_shared_memory::segment_manager>  ShmemAllocatorUint;
+typedef allocator<int, managed_shared_memory::segment_manager> ShmemAllocatorInt;
+typedef allocator<float, managed_shared_memory::segment_manager> ShmemAllocatorFloat;
+typedef allocator<uint8_t, managed_shared_memory::segment_manager> ShmemAllocatorUint;
 typedef std::vector<int, ShmemAllocatorInt> IntVector;
 typedef std::vector<float, ShmemAllocatorFloat> FloatVector;
 typedef std::vector<uint8_t, ShmemAllocatorUint> UintVector;
+
 
 class cPersistentIntTensor{
 	private:
@@ -25,28 +26,33 @@ class cPersistentIntTensor{
 		int size;
 		std::string *name = NULL;
 	public:
-		cPersistentIntTensor(IntVector *_vector, const std::string &_name, managed_shared_memory *_segment){
+		cPersistentIntTensor(IntVector *_vector, const std::string &_name, managed_shared_memory *_segment) {
 			vector = _vector;
 			size = vector->size();
 			segment = _segment;
 			name = new std::string(_name);
 		}
-		~cPersistentIntTensor(){
+
+		~cPersistentIntTensor() {
 			segment->destroy<IntVector>(name->c_str());
 			delete name;
 		}
-		void write(torch::Tensor T){
+
+		void write(torch::Tensor T) {
 			for(int i=0; i<size; i++)
 				(*vector)[i] = T.data_ptr<int>()[i];
 		};
-		torch::Tensor read(){
+		
+		torch::Tensor read() {
 			torch::Tensor T = torch::zeros(size, torch::TensorOptions().dtype(torch::kInt).device(torch::kCPU));
-			for(int i=0; i<size; i++)
+			for(int i = 0; i < size; i++)
 				T[i] = (*vector)[i];
+
 			return T;
 		}
-		
 };
+
+
 class cPersistentFloatTensor{
 	private:
 		managed_shared_memory *segment = NULL;
@@ -54,28 +60,36 @@ class cPersistentFloatTensor{
 		int size;
 		std::string *name = NULL;
 	public:
-		cPersistentFloatTensor(FloatVector *_vector, const std::string &_name, managed_shared_memory *_segment){
+		cPersistentFloatTensor(FloatVector *_vector, const std::string &_name, managed_shared_memory *_segment) {
+			//std::cout << "cPersistentFloatTensor()" << std::endl;
 			vector = _vector;
 			size = vector->size();
 			segment = _segment;
 			name = new std::string(_name);
 		}
+
 		~cPersistentFloatTensor(){
 			segment->destroy<FloatVector>(name->c_str());
 			delete name;
 		}
+
 		void write(torch::Tensor T){
-			for(int i=0; i<size; i++)
+			for(int i = 0; i < size; i++)
 				(*vector)[i] = T.data_ptr<float>()[i];
 		}
+		
 		torch::Tensor read(){
+			//std::cout<<"cPersistentFloatTensor read() test" << std::endl;
 			torch::Tensor T = torch::zeros(size, torch::TensorOptions().dtype(torch::kFloat).device(torch::kCPU));
-			for(int i=0; i<size; i++)
+			for(int i = 0; i < size; i++)
 				T[i] = (*vector)[i];
+
 			return T;
 		}
 };
-class cPersistentUintTensor{
+
+
+class cPersistentUintTensor {
 	private:
 		managed_shared_memory *segment = NULL;
 		UintVector *vector = NULL;
@@ -88,30 +102,37 @@ class cPersistentUintTensor{
 			segment = _segment;
 			name = new std::string(_name);
 		}
+
 		~cPersistentUintTensor(){
 			segment->destroy<UintVector>(name->c_str());
 			delete name;
 		}
+
 		void write(torch::Tensor T){
 			for(int i = 0; i < size; i++)
 				(*vector)[i] = T.data_ptr<int>()[i];
 		};
-		torch::Tensor read(){
+
+		torch::Tensor read() {
 			torch::Tensor T = torch::from_blob(vector->data(), {static_cast<int64_t>(vector->size())},
 			        torch::TensorOptions().dtype(torch::kU8).device(torch::kCPU));
+
+			//torch::Tensor T = torch::zeros(size, torch::TensorOptions().dtype(torch::kInt).device(torch::kCPU));
+			//for(int i = 0; i < size; i++) {
+				//std::cout<<"cPersistentUintTensor read i :"<<i<<std::endl;
+				//T[i] = (*vector)[i];
+			//}
 
 			return T.clone();
 		}
 };
 
-class cSharedMemoryTensor{
 
+class cSharedMemoryTensor {
 	private:
-
 		std::string *segment_name = NULL;
 		managed_shared_memory *segment = NULL;
 	public:
-		
 		cSharedMemoryTensor(const std::string &name);
 		~cSharedMemoryTensor();
 		
@@ -120,7 +141,8 @@ class cSharedMemoryTensor{
 		cPersistentUintTensor* newUintTensor(const std::string &name, int size);
 };
 
-class cSharedMemorySemaphore{
+
+class cSharedMemorySemaphore {
 	private:
 		std::string *name;
 		mapped_region *region;
