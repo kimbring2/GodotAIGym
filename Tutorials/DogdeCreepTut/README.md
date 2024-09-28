@@ -18,7 +18,7 @@ This repo is branch of original **[GodotAIGym](https://github.com/lupoglaz/Godot
 
 3. After that, you need to create the `DodgeCreep.x86_64` and `DodgeCreep.pck` files into the [dodge_the_creeps](https://github.com/kimbring2/GodotAIGym/tree/uint_type_update/Tutorials/DogdeCreepTut/dodge_the_creeps "dodge_the_creeps") directory. You can find the `project.godot` file inside of there.
    
-   ![](/home/kimbring2/snap/marktext/9/.config/marktext/images/2024-09-28-10-32-46-Screenshot%20from%202024-09-28%2010-31-55.png)
+   ![](images/image_2.png "game exe image")
 
 4. If you can install and run the master branch, try to run the example of this repo by using below command. Different from master branch, it use the frame screen image as input. It should start to run the environment and show game screen and gray scale image of that. 
    
