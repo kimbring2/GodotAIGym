@@ -1,6 +1,6 @@
 # DogdeCreepTut
 
-This repo is branch of original GodotAIGym to use the frame screen as the input of Neural Network.
+This repo is branch of original **[GodotAIGym](https://github.com/lupoglaz/GodotAIGym)** to use the frame screen of 2D game as the input of Neural Network.
 
 ## Python Dependencies
 
@@ -16,7 +16,11 @@ This repo is branch of original GodotAIGym to use the frame screen as the input 
 
 2. Please test the [original agent of master branch](https://github.com/lupoglaz/GodotAIGym/tree/master/Tutorials/InvPendulumTut).
 
-3. If you can install and run the master branch, try to run the example of this repo by using below command. Different from master branch, it use the frame screen image as input. It should start to run the environment and show game screen and gray scale image of that. 
+3. After that, you need to create the `DodgeCreep.x86_64` and `DodgeCreep.pck` files into the [dodge_the_creeps](https://github.com/kimbring2/GodotAIGym/tree/uint_type_update/Tutorials/DogdeCreepTut/dodge_the_creeps "dodge_the_creeps") directory. You can find the `project.godot` file inside of there.
+   
+   ![](/home/kimbring2/snap/marktext/9/.config/marktext/images/2024-09-28-10-32-46-Screenshot%20from%202024-09-28%2010-31-55.png)
+
+4. If you can install and run the master branch, try to run the example of this repo by using below command. Different from master branch, it use the frame screen image as input. It should start to run the environment and show game screen and gray scale image of that. 
    
    ```
    $ python env_test.py
@@ -24,9 +28,9 @@ This repo is branch of original GodotAIGym to use the frame screen as the input 
    
    ![](images/image_1.png "env_test.py image")
 
-4. If you can see the above image, try to train the agent using the [DodgeCreep_A2C_CNN.ipynb](https://github.com/kimbring2/GodotAIGym/blob/uint_type_update/Tutorials/DogdeCreepTut/DodgeCreep_A2C_CNN.ipynb "DodgeCreep_A2C_CNN.ipynb") file.
+5. If you can see the above image, try to train the agent using the [DodgeCreep_A2C_CNN.ipynb](https://github.com/kimbring2/GodotAIGym/blob/uint_type_update/Tutorials/DogdeCreepTut/DodgeCreep_A2C_CNN.ipynb "DodgeCreep_A2C_CNN.ipynb") file.
 
-5.  You can see the training progress by using the Tensorboard under the tensorboard folder.
+6. You can see the training progress by using the Tensorboard under the tensorboard folder.
    
    ```
    $ tensorboard --logdir=./tensorboard
@@ -34,6 +38,6 @@ This repo is branch of original GodotAIGym to use the frame screen as the input 
    
    ![](images/reward_graph.png "tensorboard reward graph")
 
-4. You can see also the agent start to collect the coin after few hours later.
+7. You can see also the agent start to collect the coin after few hours later.
    
    ![](images/training_result.gif "training result")
