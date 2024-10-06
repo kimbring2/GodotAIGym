@@ -1,0 +1,9 @@
+res://lobby.tscn
+res://logic/pong.gd
+res://logic/paddle.gd
+res://logic/lobby.gd
+res://pong.tscn
+res://logic/ball.gd
+res://paddle.tscn
+res://wall.gd
+res://ball.tscn

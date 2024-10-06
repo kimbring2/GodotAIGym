@@ -1,0 +1,106 @@
+[gd_scene load_steps=5 format=3 uid="uid://bafoh1ief0147"]
+
+[ext_resource type="Script" path="res://logic/pong.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://b10swafhe08oj" path="res://separator.png" id="2"]
+[ext_resource type="PackedScene" uid="uid://cpw46256eirwq" path="res://paddle.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://bjmldn1x3lpa" path="res://ball.tscn" id="4"]
+
+[node name="Pong" type="Node2D"]
+script = ExtResource("1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 640.0
+offset_bottom = 400.0
+color = Color(0.141176, 0.152941, 0.164706, 1)
+
+[node name="Separator" type="Sprite2D" parent="."]
+position = Vector2(320, 200)
+texture = ExtResource("2")
+
+[node name="Player1" parent="." instance=ExtResource("3")]
+modulate = Color(0, 1, 1, 1)
+position = Vector2(32.49, 188.622)
+collision_layer = 2
+collision_mask = 5
+left = true
+
+[node name="Sprite2D" parent="Player1" index="0"]
+position = Vector2(-0.490002, 0.377997)
+scale = Vector2(1.001, 1.688)
+
+[node name="Shape3D" parent="Player1" index="1"]
+position = Vector2(-0.490002, 0.378006)
+
+[node name="Player2" parent="." instance=ExtResource("3")]
+modulate = Color(1, 0, 1, 1)
+position = Vector2(610.88, 189.622)
+collision_layer = 2
+collision_mask = 5
+
+[node name="Sprite2D" parent="Player2" index="0"]
+position = Vector2(-1, 0.378014)
+scale = Vector2(1, 1.6875)
+
+[node name="Shape3D" parent="Player2" index="1"]
+position = Vector2(-1, 0)
+
+[node name="Ball" parent="." instance=ExtResource("4")]
+position = Vector2(320.387, 189.525)
+collision_layer = 4
+collision_mask = 3
+
+[node name="ScoreLeft" type="Label" parent="."]
+offset_left = 240.0
+offset_top = 10.0
+offset_right = 280.0
+offset_bottom = 30.0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "0"
+
+[node name="ScoreRight" type="Label" parent="."]
+offset_left = 383.0
+offset_top = 10.0
+offset_right = 423.0
+offset_bottom = 33.0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "0"
+
+[node name="WinnerLeft" type="Label" parent="."]
+visible = false
+offset_left = 190.0
+offset_top = 170.0
+offset_right = 267.0
+offset_bottom = 184.0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "The Winner!"
+
+[node name="WinnerRight" type="Label" parent="."]
+visible = false
+offset_left = 380.0
+offset_top = 170.0
+offset_right = 457.0
+offset_bottom = 184.0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "The Winner!"
+
+[node name="ExitGame" type="Button" parent="."]
+visible = false
+offset_left = 280.0
+offset_top = 340.0
+offset_right = 360.0
+offset_bottom = 360.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+text = "Exit Game"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(320, 200)
+
+[connection signal="pressed" from="ExitGame" to="." method="_on_exit_game_pressed"]
+
+[editable path="Player1"]
+[editable path="Player2"]
