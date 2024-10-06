@@ -30,7 +30,7 @@ This repo is branch of original **[GodotAIGym](https://github.com/lupoglaz/Godot
    $ python env_test_server.py
    ```
    
-   ![](/home/kimbring2/Desktop/GodotAIGym/Tutorials/MultiplayerPongTut/images/image_3.png "env_test.py image")
+   ![](images/image_3.png "env_test.py image")
    
    Second, you need to start the client game. You can see the **Join** button is pushed automatically.
    
@@ -62,11 +62,11 @@ This repo is branch of original **[GodotAIGym](https://github.com/lupoglaz/Godot
 
 7. Trained weight of client agent is saved under the **model** folder periodocayll. We are going to use it to evaluithe performance of model.
    
-   ![](/home/kimbring2/Desktop/GodotAIGym/Tutorials/MultiplayerPongTut/images/image_4.png "tensorboard reward graph")
+   ![](images/image_4.png "tensorboard reward graph")
 
 8. To test the trained agent, you also need to run server and client game using the command below. Please load the trained model into client agent.
    
-   ![](/home/kimbring2/Desktop/GodotAIGym/Tutorials/MultiplayerPongTut/images/image_5.png "tensorboard reward graph")
+   ![](images/image_5.png "tensorboard reward graph")
    
    ```
    $ python human_play.py
@@ -78,4 +78,4 @@ This repo is branch of original **[GodotAIGym](https://github.com/lupoglaz/Godot
    
    You are going to play the game thorugh the PyGame window. I was able to confirm that trained model can play the game with people to a certain level.
    
-   ![](/home/kimbring2/Desktop/GodotAIGym/Tutorials/MultiplayerPongTut/images/training_result.gif "tensorboard reward graph")
+   ![](images/training_result.gif "tensorboard reward graph")
